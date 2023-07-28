@@ -23,7 +23,7 @@
         		<div class="row">
         			<div class="col-1"></div>
         			<div class="col-10">
-        				<form action="/bbs/board/write" method="post" enctype="multipart/form-data">
+        				<form action="/sbbs/board/write" method="post" enctype="multipart/form-data">
         					<table>
 	        					<tr>
 	        						<td style="width:10%"><label class="col-form-label">제목</label></td>
@@ -40,7 +40,7 @@
 			                    <tr>
 			                        <td colspan="2" style="text-align: center;">
 			                            <input class="btn btn-primary" type="submit" value="제출">
-			                            <a href="/bbs/board/list?p=1&f=&q="><input class="btn btn-secondary" type="button" value="취소"></a>
+			                            <a href="/sbbs/board/list?p=1&f=&q="><input class="btn btn-secondary" type="button" value="취소"></a>
 			                        </td>
 			                    </tr>
         					</table>
@@ -55,7 +55,7 @@
     <%@ include file="../common/bottom.jspf" %>
     <script>
 		CKEDITOR.replace('content', {
-			filebrowserImageUploadUrl: '/bbs/file/imageUpload',
+			filebrowserImageUploadUrl: '/sbbs/file/imageUpload',
 			filebrowserUploadMethod: 'form',
 			height: 330, width: 700
 		});

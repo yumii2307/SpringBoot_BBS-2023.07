@@ -9,6 +9,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.OutputStream;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -64,6 +66,26 @@ public class AsideUtil {
 			e.printStackTrace();
 		}
 		return newFname;
+	}
+	
+	// 행안부 도로명 주소 API
+	public String getRoadAddr(String place) {
+		
+		return null;
+	}
+	
+	// 카카오 로컬 API - 위도, 경도
+	public List<String> getGeoCode(String roadAddr) {
+		List<String> list = new ArrayList<>();
+		
+		return list;
+	}
+	
+	// OpenWeather API
+	public String getWeahter(List<String> geoCode) {
+		
+		
+		return "가상의 날씨";
 	}
 	
 }

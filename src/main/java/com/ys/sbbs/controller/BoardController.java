@@ -76,19 +76,20 @@ public class BoardController {
 		Board board = boardService.getBoard(bid);
 		String jsonFiles = board.getFiles();
 		if (!(jsonFiles == null || jsonFiles.equals(""))) {
-			JsonUtil ju = new JsonUtil();
-			List<String> fileList = ju.jsonToList(jsonFiles);
+			List<String> fileList = new JsonUtil().jsonToList(jsonFiles);
 			model.addAttribute("fileList", fileList);
 		}
 		model.addAttribute("board", board);
 		List<Reply> replyList = replyService.getReplyList(bid);
 		model.addAttribute("replyList", replyList);
-		return "board/detail";
+		// return "board/detail";
+		return "board/detailEditor";
 	}
 	
 	@GetMapping("/write")
 	public String writeForm() {
-		return "board/write";
+		// return "board/write";
+		return "board/writeEditor";
 	}
 	
 	@PostMapping("/write")
@@ -109,8 +110,7 @@ public class BoardController {
 			}
 			fileList.add(filename);
 		}
-		JsonUtil ju = new JsonUtil();
-		String files = ju.listToJson(fileList);
+		String files = new JsonUtil().listToJson(fileList);
 		String sessionUid = (String) session.getAttribute("sessUid");
 		
 		Board board = new Board(sessionUid, title, content, files);
@@ -119,10 +119,18 @@ public class BoardController {
 	}
 	
 	@GetMapping("/update/{bid}") 
-	public String updateForm(@PathVariable int bid, Model model) {
+	public String updateForm(@PathVariable int bid, HttpSession session, Model model) {
 		Board board = boardService.getBoard(bid);
+		board.setTitle(board.getTitle().replace("\"", "&quot;"));
 		model.addAttribute("board", board);
-		return "board/update";
+		
+		String uploadedFiles = board.getFiles().trim();
+		if (uploadedFiles != null && uploadedFiles.contains("list")) {
+			List<String> fileList = new JsonUtil().jsonToList(uploadedFiles);
+			session.setAttribute("fileList", fileList);
+		}
+		// return "board/update";
+		return "board/updateEditor";
 	}
 	
 	@PostMapping("/update")
@@ -130,13 +138,44 @@ public class BoardController {
 		int bid = Integer.parseInt(req.getParameter("bid"));
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
+		String sessionUid = (String) session.getAttribute("sessUid");
 		
-		Board board = new Board(bid, title, content);
+		List<String> fileList = (List<String>) session.getAttribute("fileList");
+		if (fileList != null && fileList.size() > 0) {
+			String[] delFiles = req.getParameterValues("delFile");
+			if (delFiles != null && delFiles.length > 0) {
+				for (String delFile: delFiles) {
+					fileList.remove(delFile);			// fileList에서 삭제
+					File df = new File(uploadDir + "upload/" + delFile);	// 실제 파일 삭제
+					df.delete();
+				}
+			}
+		} else {
+			fileList = new ArrayList<String>();
+		}
+		
+		List<MultipartFile> uploadFileList = req.getFiles("files");
+		for (MultipartFile part: uploadFileList) {
+			if (part.getContentType().contains("octet-stream"))		// 첨부 파일이 없는 경우 application/octet-stream
+				continue;
+			String filename = part.getOriginalFilename();
+			String uploadPath = uploadDir + "upload/" + filename;
+			try {
+				part.transferTo(new File(uploadPath));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			fileList.add(filename);
+		}
+		String files = new JsonUtil().listToJson(fileList);
+		
+		Board board = new Board(bid, title, content, files);
 		boardService.updateBoard(board);
 		model.addAttribute("title", title);
 		model.addAttribute("content", content);
+		model.addAttribute("files", files);
 		model.addAttribute("msg", "수정이 완료되었습니다.");
-		model.addAttribute("url", "/sbbs/board/list?p=" + session.getAttribute("currentBoardPage") + "&f=&q=");
+		model.addAttribute("url", "/sbbs/board/detail/" + bid + "/" + sessionUid + "?option=DNI");	// bid, sessionUid 추가
 		
 		return "common/alertMsg";
 	}
