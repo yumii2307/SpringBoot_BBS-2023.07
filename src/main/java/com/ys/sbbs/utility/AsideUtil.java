@@ -14,6 +14,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class AsideUtil {
 
 	public String getTodayQuote(String filename) {
