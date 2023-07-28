@@ -69,7 +69,7 @@ public class BoardController {
 			HttpSession session, Model model) {
 		
 		// 본인이 조회한 경우 또는 댓글 작성후에는 조회수를 증가시키지 않음
-		String sessionUid = (String) session.getAttribute("uid");
+		String sessionUid = (String) session.getAttribute("sessUid");
 		if (!uid.equals(sessionUid) && (option==null || option.equals("")))
 			boardService.increaseViewCount(bid);
 		
@@ -111,7 +111,7 @@ public class BoardController {
 		}
 		JsonUtil ju = new JsonUtil();
 		String files = ju.listToJson(fileList);
-		String sessionUid = (String) session.getAttribute("uid");
+		String sessionUid = (String) session.getAttribute("sessUid");
 		
 		Board board = new Board(sessionUid, title, content, files);
 		boardService.insertBoard(board);

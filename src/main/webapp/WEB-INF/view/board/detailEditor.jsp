@@ -24,7 +24,7 @@
                     <span style="font-size: 0.6em; float: right; line-height: 33px;'">
                         <a href="/sbbs/board/list?p=${currentBoardPage}&f=&q=" class="me-2"><i class="fas fa-list-ul"></i> 목록</a>
                         <!-- 본인만 수정 가능 -->
-                        <c:if test="${uid eq board.uid}">
+                        <c:if test="${sessUid eq board.uid}">
                         	<a href="/sbbs/board/update/${board.bid}" class="me-2"><i class="far fa-edit"></i> 수정</a>
                         	<a href="/sbbs/board/delete/${board.bid}" class="me-2"><i class="fas fa-trash-alt"></i> 삭제</a>
                         </c:if>
