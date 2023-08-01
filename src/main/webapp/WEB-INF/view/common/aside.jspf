@@ -22,9 +22,10 @@
                 
                 <div class="mt-5">
                     <i class="fa fa-envelope me-2"></i><a href="#">${email}</a><br>
-                    <i class="fa-solid fa-location-dot me-2" id="addr"></i>${addr}
+                    <i class="fa-solid fa-location-dot me-2"></i>
+                    <span id="addr">${addr}</span>
                     <a href="#" id="getWeatherBtn"><span class="badge bg-secondary">날씨</span></a>
                     <div id="weather"></div>
                 </div>
-                <button class="btn btn-sm btn-outline-primary mt-3">Edit Profile</button>
+                <button class="btn btn-sm btn-outline-primary mt-3" onclick="http://localhost:8080/sbbs/user/update/${uid}">Edit Profile</button>
             </div>
