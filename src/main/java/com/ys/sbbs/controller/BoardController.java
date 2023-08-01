@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -22,10 +21,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.ys.sbbs.entity.Board;
 import com.ys.sbbs.entity.Reply;
-import com.ys.sbbs.entity.User;
 import com.ys.sbbs.service.BoardService;
 import com.ys.sbbs.service.ReplyService;
-import com.ys.sbbs.utility.AsideUtil;
 import com.ys.sbbs.utility.JsonUtil;
 
 @Controller
