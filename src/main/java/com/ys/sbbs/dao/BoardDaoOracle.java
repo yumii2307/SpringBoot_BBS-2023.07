@@ -30,12 +30,12 @@ public interface BoardDaoOracle {
 			+ "  WHERE rnum > #{offset}")
 	List<Board> listBoard(String field, String query, int maxrow, int offset);
 	
-	@Insert("insert into board values(default, #{uid}, #{title}, #{content},"
-			+ " default, default, default, default, #{files})")
+	@Insert("insert into board values(default, #{uid}, #{title}, #{content, jdbcType=VARCHAR},"
+			+ " default, default, default, default, #{files, jdbcType=VARCHAR})")
 	void insertBoard(Board board);
 	
-	@Update("update board set title=#{title}, content=#{content}, modTime=CURRENT_TIMESTAMP,"
-			+ " files=#{files} where bid=#{bid}")
+	@Update("update board set title=#{title}, content=#{content, jdbcType=VARCHAR}, modTime=CURRENT_TIMESTAMP,"
+			+ " files=#{files, jdbcType=VARCHAR} where bid=#{bid}")
 	void updateBoard(Board board);
 	
 	@Update("update board set isDeleted=1 where bid=#{bid}")
