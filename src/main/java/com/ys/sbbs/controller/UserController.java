@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,8 @@ import com.ys.sbbs.utility.AsideUtil;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
 	@Autowired private UserService userService;
 	@Value("${spring.servlet.multipart.location}") private String uploadDir;
 	
@@ -99,6 +103,7 @@ public class UserController {
 			session.setAttribute("stateMsg", stateMsg);
 			
 			// 환영 메세지
+			log.info("Info Login: {}, {}", uid, user.getUname());
 			model.addAttribute("msg", user.getUname() + "님 환영합니다.");
 			model.addAttribute("url", "/sbbs/board/list?p=1&f=&q=");
 			return "common/alertMsg";
