@@ -8,11 +8,11 @@ import org.apache.ibatis.annotations.Select;
 
 import com.ys.sbbs.entity.Reply;
 
-@Mapper
+// @Mapper
 public interface ReplyDaoMySQL {
 	
-	@Select("SELECT r.rid, r.comment, r.regTime, r.isMine, r.uid, r.bid, u.uname FROM reply AS r"
-			+ "	JOIN users AS u ON r.uid=u.uid WHERE r.bid=#{bid}")
+	@Select("SELECT r.rid, r.\"comment\", r.regTime, r.isMine, r.\"uid\", r.bid, u.uname FROM reply AS r"
+			+ "	JOIN users AS u ON r.\"uid\"=u.\"uid\" WHERE r.bid=#{bid}")
 	List<Reply> getReplyList(int bid);
 	
 	@Insert("insert into reply values(default, #{comment}, default, #{isMine}, #{uid}, #{bid})")

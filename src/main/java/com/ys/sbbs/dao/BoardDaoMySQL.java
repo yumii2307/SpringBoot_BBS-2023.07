@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.ys.sbbs.entity.Board;
 
-@Mapper
+// @Mapper
 public interface BoardDaoMySQL {
 	@Select("SELECT b.bid, b.uid, b.title, b.content, b.modTime, b.viewCount,"
 			+ " b.replyCount, b.files, u.uname FROM board AS b"

@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.ys.sbbs.entity.User;
 
-@Mapper
+// @Mapper
 public interface UserDaoMySQL {
 
 	@Select("select count(uid) from users where isDeleted=0")
